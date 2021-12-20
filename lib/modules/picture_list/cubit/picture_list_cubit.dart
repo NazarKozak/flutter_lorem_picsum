@@ -12,7 +12,9 @@ class PictureListCubit extends Cubit<PictureListState> {
 
   ScrollController scrollController = ScrollController();
   List<Photo> loadedPictures = [];
+
   bool isLoading = false;
+  int limit = 30;
 
   init() async {
     await getMoreData();
@@ -42,7 +44,7 @@ class PictureListCubit extends Cubit<PictureListState> {
 
   Future<void> getMoreData() async {
       startFetching();
-      final pictures = await repository.pictureList();
+      final pictures = await repository.pictureList(page: ((loadedPictures.length/limit) + 1).ceil(), limit: limit);
       loadedPictures.addAll(pictures);
       endFetching();
   }

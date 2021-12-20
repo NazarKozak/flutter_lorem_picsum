@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_lorem_picsum/core/config/api_constants.dart';
-
 import 'package:flutter_lorem_picsum/modules/modules.dart';
 
 class PictureList extends StatelessWidget {
@@ -13,6 +10,7 @@ class PictureList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      controller: cubit.scrollController,
       itemCount: cubit.loadedPictures.length,
       itemBuilder: (context, index) {
         if (index == cubit.loadedPictures.length) {
@@ -23,26 +21,7 @@ class PictureList extends StatelessWidget {
             ),
           );
         }
-        return Card(
-          margin: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-          child: Column(
-            children: [
-              CachedNetworkImage(
-                imageUrl: "${ApiConstants.singleImageUrl}${cubit.loadedPictures[index].id}/400/300",
-                placeholder: (context, url) => const SizedBox(
-                    width: 30,
-                    height: 30,
-                    child: CircularProgressIndicator()
-                ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                child: Text("by ${cubit.loadedPictures[index].author}"),
-              )
-            ],
-          ),
-        );
+        return PictureCard(photo: cubit.loadedPictures[index]);
       },
     );
   }
