@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nazarkozak.flutter_lorem_picsum">
    <application
-        android:label="flutter_lorem_picsum"
+        android:label="Lorem Picsum"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
