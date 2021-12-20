@@ -1,14 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter_lorem_picsum/core/core.dart';
+import 'package:flutter_lorem_picsum/core/widgets/save_button.dart';
+import 'package:flutter_lorem_picsum/core/widgets/share_button.dart';
 import 'package:flutter_lorem_picsum/modules/modules.dart';
-import 'package:flutter_lorem_picsum/utils/utils.dart';
-import 'package:gallery_saver/gallery_saver.dart';
-import 'package:share/share.dart';
 
 class PictureCard extends StatelessWidget {
   const PictureCard({Key? key, required this.photo}) : super(key: key);
@@ -43,26 +40,8 @@ class PictureCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      IconButton(
-                        onPressed: () async {
-                          GallerySaver.saveImage("${photo.downloadUrl}.jpg").then((value) => {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return const SavedImageAlert();
-                              }
-                            )
-                          });
-                        },
-                        icon: const Icon(Icons.save_alt)
-                      ),
-                      IconButton(
-                        onPressed: () async {
-                          String filePath = await Utilities.getImagePath(photo.downloadUrl);
-                          Share.shareFiles([filePath]);
-                        },
-                        icon: const Icon(Icons.share)
-                      )
+                     SaveButton(downloadUrl: photo.downloadUrl),
+                     ShareButton(downloadUrl: photo.downloadUrl)
                     ],
                   )
                 ],
