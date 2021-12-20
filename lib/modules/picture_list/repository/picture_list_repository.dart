@@ -5,7 +5,7 @@ import 'package:flutter_lorem_picsum/core/service/service.dart';
 import 'package:flutter_lorem_picsum/modules/picture_list/repository/repository.dart';
 
 
-class PictureListRepository implements PictureRepositoryInterface {
+class PictureListRepository implements PictureListRepositoryInterface {
   PictureListRepository(this.apiService);
 
   final ApiService apiService;
