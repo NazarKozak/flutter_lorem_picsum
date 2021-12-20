@@ -1,0 +1,1 @@
+export 'picture_details_screen.dart';
