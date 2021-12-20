@@ -1,18 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:photo_view/photo_view.dart';
 
-class PicturesDetailsScreen extends StatefulWidget {
-  const PicturesDetailsScreen({Key? key, required this.imageProvider, required this.loadingBuilder}) : super(key: key);
+import 'package:flutter_lorem_picsum/core/widgets/widgets.dart';
 
-  final ImageProvider imageProvider;
-  final LoadingBuilder loadingBuilder;
+class PicturesDetailsScreen extends StatelessWidget {
+  const PicturesDetailsScreen({Key? key, required this.downloadUrl}) : super(key: key);
 
-  @override
-  State<PicturesDetailsScreen> createState() => _PicturesDetailsScreenState();
-}
-
-class _PicturesDetailsScreenState extends State<PicturesDetailsScreen> {
+  final String downloadUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +17,12 @@ class _PicturesDetailsScreenState extends State<PicturesDetailsScreen> {
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
       body: PhotoView(
-        imageProvider: widget.imageProvider,
-        loadingBuilder: widget.loadingBuilder,
+        imageProvider: CachedNetworkImageProvider(downloadUrl),
+        loadingBuilder: (context, event) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       )
     );
   }
@@ -31,6 +31,10 @@ class _PicturesDetailsScreenState extends State<PicturesDetailsScreen> {
     automaticallyImplyLeading: true,
     elevation: 0,
     backgroundColor: Colors.transparent,
+    actions: [
+      SaveButton(downloadUrl: downloadUrl),
+      ShareButton(downloadUrl: downloadUrl)
+    ],
   );
 
 }

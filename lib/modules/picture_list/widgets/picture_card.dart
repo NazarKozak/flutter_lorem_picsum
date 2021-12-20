@@ -15,7 +15,13 @@ class PictureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
    return GestureDetector(
-     onTap: () => openDetails(context, photo),
+     onTap: () => Navigator.push(context,
+         MaterialPageRoute(
+           builder: (context) => PicturesDetailsScreen(
+             downloadUrl: photo.downloadUrl,
+           ),
+         )
+     ),
      child: Card(
         margin: const EdgeInsets.fromLTRB(16, 4, 16, 4),
         child: Column(
@@ -34,9 +40,11 @@ class PictureCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Text("by ${photo.author}", style: Theme.of(context).textTheme.headline5),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Text("by ${photo.author}", overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.headline5),
+                    ),
                   ),
                   Row(
                     children: [
@@ -51,22 +59,6 @@ class PictureCard extends StatelessWidget {
         ),
       ),
    );
-  }
-
-  void openDetails(BuildContext context, Photo photo) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => PicturesDetailsScreen(
-          imageProvider: CachedNetworkImageProvider(photo.downloadUrl),
-          loadingBuilder: (context, event) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ),
-      )
-    );
   }
 
 }

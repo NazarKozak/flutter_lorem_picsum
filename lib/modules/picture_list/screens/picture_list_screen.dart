@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter_lorem_picsum/modules/modules.dart';
-import 'package:flutter_lorem_picsum/modules/picture_list/widgets/pictures_list.dart';
 
 class PicturesListScreen extends StatefulWidget {
   const PicturesListScreen({Key? key}) : super(key: key);
