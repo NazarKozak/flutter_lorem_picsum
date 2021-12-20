@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter_lorem_picsum/core/core.dart';
 import 'package:flutter_lorem_picsum/modules/modules.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 
 class PictureCard extends StatelessWidget {
   const PictureCard({Key? key, required this.photo}) : super(key: key);
@@ -30,12 +30,59 @@ class PictureCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-              child: Text("by ${photo.author}", style: Theme.of(context).textTheme.headline5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text("by ${photo.author}", style: Theme.of(context).textTheme.headline5),
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () async {
+                          GallerySaver.saveImage("${photo.downloadUrl}.jpg").then((value) => {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alertDialog(context);
+                              }
+                            )
+                          });
+                        },
+                        icon: const Icon(Icons.save_alt)
+                      ),
+                      IconButton(
+                        onPressed: () {
+
+                        },
+                        icon: const Icon(Icons.share)
+                      )
+                    ],
+                  )
+                ],
+              ),
             )
           ],
         ),
       ),
    );
+  }
+
+  Widget alertDialog(BuildContext context) {
+    Widget okButton = TextButton(
+      child: const Text("Ok"),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+
+    return AlertDialog(
+      title: Text("Photo saved", style: Theme.of(context).textTheme.headline6),
+      actions: [
+        okButton,
+      ],
+    );
   }
 
   void openDetails(BuildContext context, Photo photo) {
