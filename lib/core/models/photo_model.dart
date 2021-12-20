@@ -1,7 +1,5 @@
-import 'dart:convert';
-
-class Picture {
-  Picture({
+class Photo {
+  Photo({
     required this.id,
     this.author = "",
     this.width = 0,
@@ -17,7 +15,7 @@ class Picture {
   String url;
   String downloadUrl;
 
-  factory Picture.fromJson(Map<String, dynamic> json) => Picture(
+  factory Photo.fromJson(Map<String, dynamic> json) => Photo(
     id: json["id"],
     author: json["author"],
     width: json["width"],
@@ -34,6 +32,4 @@ class Picture {
     "url": url,
     "download_url": downloadUrl,
   };
-
-  List<Picture> picturesFromJson(String str) => List<Picture>.from(json.decode(str).map((x) => Picture.fromJson(x)));
 }
